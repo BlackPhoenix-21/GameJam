@@ -12,11 +12,13 @@ public class ObstacleScript : MonoBehaviour
     public GameObject bubbleScreen;
 
     private Animator anim;
+    private AudioSource audioSource;
 
     void Start()
     {
         try { anim = GetComponent<Animator>(); }
         catch { anim = null; }
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Methods
@@ -35,6 +37,16 @@ public class ObstacleScript : MonoBehaviour
         {
             if (ObstacleType == Obstacles.StasisField)
             {
+                PlayerMovement pM = other.GetComponent<PlayerMovement>();
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+                if (!pM.hitSound.isPlaying)
+                {
+                    pM.hitSound.Play();
+                }
+
                 HandleStasisField(other);
             }
         }
@@ -47,12 +59,32 @@ public class ObstacleScript : MonoBehaviour
         {
             if (ObstacleType == Obstacles.ImpulseField)
             {
+                PlayerMovement pM = collision.gameObject.GetComponent<PlayerMovement>();
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+                if (!pM.hitSound.isPlaying)
+                {
+                    pM.hitSound.Play();
+                }
+
                 HandleImpulseField(collision.gameObject);
                 if (DestroyOnUse)
                     Destroy(gameObject);
             }
             else if (ObstacleType == Obstacles.Bubble)
             {
+                PlayerMovement pM = collision.gameObject.GetComponent<PlayerMovement>();
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+                if (!pM.hitSound.isPlaying)
+                {
+                    pM.hitSound.Play();
+                }
+
                 StartCoroutine(BubbleEffect());
             }
         }

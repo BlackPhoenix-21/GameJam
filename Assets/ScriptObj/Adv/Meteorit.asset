@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aecb6b8b2896e24f9dc3f76c1dc32cc, type: 3}
+  m_Name: Meteorit
+  m_EditorClassIdentifier: 
+  AdvanceIDEdit: 3
+  NameEdit: Space Pebble Trouble
+  DescriptionEdit: Hit by a meteorite. Guess space really is rock n roll.
+  AchievedEdit: 0
+  ImgEdit: {fileID: 5652172367928886817, guid: 6b91bdf3e36663f4c8a8b142abe4c4f6, type: 3}
+  AdvanceID: 3
+  Name: Space Pebble Trouble
+  Description: "Hit by a meteorite. Guess space really is rock \u2018n\u2019 roll."
+  Achieved: 0
+  Img: {fileID: 5652172367928886817, guid: 6b91bdf3e36663f4c8a8b142abe4c4f6, type: 3}

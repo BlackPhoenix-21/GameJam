@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aecb6b8b2896e24f9dc3f76c1dc32cc, type: 3}
+  m_Name: Schwarzes Loch
+  m_EditorClassIdentifier: 
+  AdvanceIDEdit: 1
+  NameEdit: Event Horizon Enthusiast
+  DescriptionEdit: You looked into the abyss... and forgot the abyss charges rent.
+  AchievedEdit: 0
+  ImgEdit: {fileID: 21300000, guid: 3c32031ab42ff0e4cadc9bc1e2906126, type: 3}
+  AdvanceID: 1
+  Name: Event Horizon Enthusiast
+  Description: "You looked into the abyss\u2026 and forgot the abyss charges rent."
+  Achieved: 1
+  Img: {fileID: 21300000, guid: 3c32031ab42ff0e4cadc9bc1e2906126, type: 3}

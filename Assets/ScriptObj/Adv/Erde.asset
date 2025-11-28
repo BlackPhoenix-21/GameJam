@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aecb6b8b2896e24f9dc3f76c1dc32cc, type: 3}
+  m_Name: Erde
+  m_EditorClassIdentifier: 
+  AdvanceIDEdit: 2
+  NameEdit: Home Sweet Home
+  DescriptionEdit: Earth located. Wi-Fi signal still terrible.
+  AchievedEdit: 0
+  ImgEdit: {fileID: -4629670777393280257, guid: 0a56da9db41038d4d8cb29cd743557fc, type: 3}
+  AdvanceID: 0
+  Name: 
+  Description: 
+  Achieved: 0
+  Img: {fileID: 0}

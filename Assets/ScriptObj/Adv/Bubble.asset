@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aecb6b8b2896e24f9dc3f76c1dc32cc, type: 3}
+  m_Name: Bubble
+  m_EditorClassIdentifier: 
+  AdvanceIDEdit: 4
+  NameEdit: Bubble Trouble
+  DescriptionEdit: You are trapped in a shiny soap opera of space-time.
+  AchievedEdit: 0
+  ImgEdit: {fileID: 30921253481390589, guid: 918b1566752f39f4eb1758c5c0cdb7c7, type: 3}
+  AdvanceID: 4
+  Name: Bubble Trouble
+  Description: "You\u2019re trapped in a shiny soap opera of space-time."
+  Achieved: 0
+  Img: {fileID: 30921253481390589, guid: 918b1566752f39f4eb1758c5c0cdb7c7, type: 3}

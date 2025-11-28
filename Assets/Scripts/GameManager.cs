@@ -1,19 +1,34 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public LevelState state = LevelState.None;
-
     public static GameManager instance;
 
     public List<Advancement> advance = new();
     private string path;
 
     private GameObject lastObj;
+
+    public GameObject Voyger;
+    private bool voyger = false;
+    public GameObject Manhole;
+    private bool manhole = false;
+
+    private bool updatetAdvance = false;
+    [HideInInspector]
+    public AdvanceUI UI;
+    [HideInInspector]
+    public int highscore = 0, allTimeHighscore = 0;
+    [HideInInspector]
+    public bool endless = false;
+
+    private bool pause = false;
+    private GameObject pauseMenu;
+    public AudioSource audioSource;
 
     void Awake()
     {
@@ -27,6 +42,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         path = Path.Combine(Application.persistentDataPath, "advancements.json");
+        Debug.Log(path);
     }
 
     void Start()
@@ -34,22 +50,72 @@ public class GameManager : MonoBehaviour
         List<Advancement> holder = LoadGame();
         if (holder != null)
         {
-            advance.Clear();
-            advance.AddRange(holder);
+            if (holder.Count != advance.Count)
+            {
+                Debug.Log("Mismatch in advancement count, rebuilding advancements.");
+                foreach (var item in holder)
+                {
+                    Debug.Log(item);
+                }
+            }
+            else
+            {
+                advance.Clear();
+                advance.AddRange(holder);
+            }
         }
         else
         {
             Debug.Log("No Saves found");
+            Debug.Log(path);
+            foreach (var item in advance)
+            {
+                item.BuildNew();
+            }
         }
-        foreach (var item in advance)
+        if (state == LevelState.MainMenu)
         {
-            item.Construct();
+            UI = GameObject.Find("AdvanceUI").GetComponent<AdvanceUI>();
+            UI.MenuAdv(advance);
+            updatetAdvance = true;
+        }
+    }
+
+    private List<string> nonSceens = new List<string> { "LoadingSceen", "GameOver", "Credits" };
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
         }
 
-        if (state == LevelState.MainMenu && false)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            AdvanceUI UI = GameObject.Find("AdvanceUI").GetComponent<AdvanceUI>();
+            if (nonSceens.Contains(SceneManager.GetActiveScene().name))
+                return;
+            pause = !pause;
+            PauseMenuButtons pmb = GameObject.Find("PauseMenu").GetComponent<PauseMenuButtons>();
+            if (pause)
+                pmb.PauseGame();
+            else
+                pmb.ResumeGame();
+        }
+
+        if (state == LevelState.MainMenu && !updatetAdvance)
+        {
+            UI.ShowChild();
             UI.MenuAdv(advance);
+            updatetAdvance = true;
+        }
+        if (!updatetAdvance)
+        {
+            return;
+        }
+        if (state != LevelState.MainMenu)
+        {
+            UI.HideChild();
+            updatetAdvance = false;
         }
     }
 
@@ -61,14 +127,29 @@ public class GameManager : MonoBehaviour
         lastObj.GetComponent<BoxCollider2D>().isTrigger = true;
         lastObj.AddComponent<NextLevelCollider>();
         lastObj.GetComponent<NextLevelCollider>().levelManager = lm;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector3 targetPos = player != null ? player.transform.position : point.position;
+
+        if (state == LevelState.Mars && !voyger)
+        {
+            GameObject prefab = Instantiate(Voyger, new Vector3(point.position.x + 5, point.position.y + 5, 0), Quaternion.identity);
+            voyger = true;
+            prefab.GetComponent<AdvancementTrigger>().targetPos = targetPos;
+            prefab.GetComponent<AdvancementTrigger>().target = true;
+        }
+        else if (state == LevelState.Merkur && !manhole)
+        {
+            GameObject prefab = Instantiate(Manhole, new Vector3(point.position.x + 5, point.position.y + 5, 0), Quaternion.identity);
+            manhole = true;
+            prefab.GetComponent<AdvancementTrigger>().targetPos = targetPos;
+            prefab.GetComponent<AdvancementTrigger>().target = true;
+        }
     }
 
     public void SaveGame()
     {
-        return;
-#pragma warning disable CS0162 // Unerreichbarer Code wurde entdeckt.
         List<AdvancementData> dataList = new();
-#pragma warning restore CS0162 // Unerreichbarer Code wurde entdeckt.
         foreach (var adv in advance)
         {
             dataList.Add(new AdvancementData
@@ -79,7 +160,13 @@ public class GameManager : MonoBehaviour
                 Achieved = adv.Achieved
             });
         }
-        AdvancementDataListWrapper wrapper = new() { advancements = dataList };
+
+        AdvancementDataListWrapper wrapper = new()
+        {
+            advancements = dataList,
+            allTimeHighscore = allTimeHighscore
+        };
+
         string json = JsonUtility.ToJson(wrapper, true);
         File.WriteAllText(path, json);
     }
@@ -90,29 +177,47 @@ public class GameManager : MonoBehaviour
             return null;
 
         string json = File.ReadAllText(path);
-        List<AdvancementData> loadedData = JsonUtility.FromJson<AdvancementDataListWrapper>(json)?.advancements;
-        if (loadedData == null)
+        var wrapper = JsonUtility.FromJson<AdvancementDataListWrapper>(json);
+        if (wrapper == null || wrapper.advancements == null)
             return null;
 
-        List<Advancement> result = new();
-        foreach (var data in loadedData)
+        // Load persisted all-time highscore
+        allTimeHighscore = wrapper.allTimeHighscore;
+
+        // Map gespeicherte Daten per ID
+        var savedById = new Dictionary<int, AdvancementData>();
+        foreach (var a in wrapper.advancements)
         {
-            var adv = advance.Find(a => a.AdvanceID == data.AdvanceID);
-            if (adv != null)
+            // Bei doppelten IDs gewinnt der letzte Eintrag
+            savedById[a.AdvanceID] = a;
+        }
+
+        // In die bestehende Masterliste mergen
+        foreach (var adv in advance)
+        {
+            if (savedById.TryGetValue(adv.AdvanceID, out var data))
             {
-                adv.Name = data.Name;
-                adv.Description = data.Description;
+                // Übernehme nur Save-relevante Felder
                 adv.Achieved = data.Achieved;
-                result.Add(adv);
+
+                // Optional: Name/Description aus Save übernehmen
+                // adv.Name = data.Name;
+                // adv.Description = data.Description;
+            }
+            else
+            {
+                // Nicht im Save vorhanden -> belasse Defaults
             }
         }
-        return result;
+
+        // Immer die vollständige Liste zurückgeben
+        return new List<Advancement>(advance);
     }
 
-    public void NewAchieved(string name)
+    public void NewAchieved(int ID)
     {
         AdvanceUI UI = GameObject.Find("AdvanceUI").GetComponent<AdvanceUI>();
-        int index = advance.FindIndex(a => a.Name == name);
+        int index = advance.FindIndex(a => a.AdvanceID == ID);
         UI.NewAdvancement(advance, index);
     }
 
@@ -129,6 +234,7 @@ public class GameManager : MonoBehaviour
     private class AdvancementDataListWrapper
     {
         public List<AdvancementData> advancements;
+        public int allTimeHighscore;
     }
 
     public enum LevelState

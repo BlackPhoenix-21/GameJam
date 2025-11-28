@@ -4,10 +4,28 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator anim;
+    private AudioSource audioSource;
 
     void Start()
     {
         anim = GameObject.FindWithTag("Player").GetComponent<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
+    }
+
+    void Update()
+    {
+        bool left = anim.GetBool("isLeft");
+        bool right = anim.GetBool("isRight");
+        bool up = anim.GetBool("isUp");
+
+        if ((left || right || up) && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+        else if (!left && !right && !up)
+        {
+            audioSource.Stop();
+        }
     }
 
     public void Animation(int index)

@@ -7,7 +7,6 @@ public class Advancement : ScriptableObject
     public int AdvanceIDEdit;
     public string NameEdit;
     public string DescriptionEdit;
-    //[HideInInspector]
     public bool AchievedEdit;
     public Sprite ImgEdit;
 
@@ -15,12 +14,12 @@ public class Advancement : ScriptableObject
     public int AdvanceID;
     [HideInInspector]
     public string Name, Description;
-    [HideInInspector]
+    //[HideInInspector]
     public bool Achieved;
     [HideInInspector]
     public Sprite Img;
 
-    public void Construct()
+    public void BuildNew()
     {
         AdvanceID = AdvanceIDEdit;
         Name = NameEdit;
@@ -28,14 +27,4 @@ public class Advancement : ScriptableObject
         Achieved = AchievedEdit;
         Img = ImgEdit;
     }
-
-    public Advancement(int advanceID, string name, string description, bool achieved, Sprite img)
-    {
-        AdvanceID = advanceID;
-        Name = name;
-        Description = description;
-        Achieved = achieved;
-        Img = img;
-    }
-
 }

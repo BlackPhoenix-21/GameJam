@@ -5,6 +5,8 @@ public class UIManager : MonoBehaviour
 {
     public Transform target;       // Das Objekt, das fällt
     public TMP_Text counterText;   // Dein TMP Text
+    [HideInInspector]
+    public int score = 0;
     private float startHeight;
 
     void Start()
@@ -23,5 +25,6 @@ public class UIManager : MonoBehaviour
 
         // Rund auf int für "Counter"-Feeling
         counterText.text = Mathf.FloorToInt(distanceFallen).ToString();
+        score = Mathf.FloorToInt(distanceFallen);
     }
 }

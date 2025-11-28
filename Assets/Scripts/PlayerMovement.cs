@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,15 +14,28 @@ public class PlayerMovement : MonoBehaviour
     public float approachRotation = 4f;
 
     private float currentRotationInput = 0f;
+    private AudioSource audioSource;
+    public AudioSource hitSound;
 
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     void Update()
     {
+        if (GameManager.instance.endless)
+        {
+            int score = GameObject.Find("UIManager").GetComponent<UIManager>().score;
+            if (score % 75 == 0 && score > 0)
+            {
+                force += 1f;
+                rotationSpeed += 10f;
+            }
+        }
+
         if (!canMove) return;
 
         bool right = Input.GetKey(KeyCode.D);
@@ -41,6 +55,15 @@ public class PlayerMovement : MonoBehaviour
             targetRotationInput,
             approachRotation * Time.deltaTime
         );
+
+        if ((left || right || up) && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+        else if (!left && !right && !up)
+        {
+            audioSource.Stop();
+        }
     }
 
     void FixedUpdate()

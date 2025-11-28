@@ -25,7 +25,10 @@ public class LoadingScreen : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("MainGame");
+            if (!GameManager.instance.endless)
+                SceneManager.LoadScene("MainGame");
+            else
+                SceneManager.LoadScene("Endless");
         }
     }
 }

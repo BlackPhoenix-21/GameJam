@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5819396701540114214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8212343380657198132}
+  - component: {fileID: 8948296693619868962}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8212343380657198132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5819396701540114214}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8948296693619868962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5819396701540114214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eaa8e352ac9940409db5d624e33a5c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPoint: {fileID: 0}
+  l1:
+  - {fileID: 8503835427507281513, guid: 3c834d9035a114743a5947bab23d5a4f, type: 3}
+  - {fileID: 1427041050616073976, guid: 0cd4dbfbe89e44b47b1d845407926f09, type: 3}
+  - {fileID: 1916924120622371631, guid: b215185c562d06b4bac3569a067a983c, type: 3}
+  l2:
+  - {fileID: 500867197239151744, guid: dc69f776b38129a44ac01c7274752411, type: 3}
+  - {fileID: 5306925195389344569, guid: 2459a85b8535adb42b74f35773a0d4aa, type: 3}
+  - {fileID: 7824372845581937926, guid: 3261090457ff6c140953dc27e88030e3, type: 3}
+  l3:
+  - {fileID: 7962286067561351522, guid: 41ddc320e56e0df4fa5db7d972c8488e, type: 3}
+  - {fileID: 2672900034756264597, guid: 591b6903e5fbae44c811fd2b277e7675, type: 3}
+  - {fileID: 5058457876149151272, guid: c9f9ddb4f4f901f439c77d563ca37ade, type: 3}
+  l4:
+  - {fileID: 5056421482001450521, guid: 73cd26cd31bd6cf41afa83346b56c774, type: 3}
+  - {fileID: 3744910539106352615, guid: f3fdb32ffe8246049a97f76878b38682, type: 3}
+  - {fileID: 2679329715189870874, guid: 21dc801c19c4d5148a6281f8a13de870, type: 3}
+  switchLevel:
+  - {fileID: 5481831721200160589, guid: 599e541a83e4e71489f26f41cb69fb06, type: 3}
+  - {fileID: 6085805082941275140, guid: f6c4098231b662a469ec4375721ec61d, type: 3}
+  - {fileID: 3826443490564251593, guid: 38b58af7bfe1e664490ab969432db1c3, type: 3}
+  - {fileID: 3240556628927086377, guid: 38082346b3d832e4487edbd5afc7d2e1, type: 3}

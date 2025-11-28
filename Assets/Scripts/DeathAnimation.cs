@@ -9,14 +9,16 @@ public class DeathAnimation : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             gameObject.GetComponentInParent<BlackHole>().isActive = false;
+            if (GameManager.instance.endless)
+                GameManager.instance.highscore = GameObject.Find("UIManager").GetComponent<UIManager>().score;
             Debug.Log("Player has died!");
 
             collision.gameObject.GetComponent<Animator>().SetTrigger("Die");
-            StartCoroutine(GameOverScreen(0));
+            StartCoroutine(GameOverScreen(0.25f));
         }
     }
 
-    IEnumerator GameOverScreen(int seconds)
+    IEnumerator GameOverScreen(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene("GameOver");
